@@ -2,15 +2,15 @@
 
 ---
 * >mkdir .env
-> 
+  > 
 * >cd .env
-> 
+  > 
 * >python -m venv web 
-> 
+  > 
 * >./env/web/Script/activete 
-> 
-* > pip3 install -r requirements.txt
 ---
+  > 
+* > pip3 install -r requirements.txt
 
 * > python migrate db init 
 
@@ -18,12 +18,9 @@
 
 * > python migrate db update
 
-
---- 
-
 * > python main.py
 
---- 
+
 ```
 ├─core                      // 核心代码区域
 ├─define                    // 配置与文档
