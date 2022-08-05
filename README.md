@@ -1,13 +1,14 @@
 ##### Flask Restful Application
 
 ---
+
 * >mkdir .env
   > 
 * >cd .env
   > 
 * >python -m venv web 
   > 
-* >./env/web/Script/activete 
+* > ./env/web/Script/activete 
 ---
   > 
 * > pip3 install -r requirements.txt
