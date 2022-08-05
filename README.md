@@ -1,21 +1,27 @@
 ##### Flask Restful Application
 
-
->>> mkdir .env
->>> cd .env
->>> python -m venv web 
->>> ./env/web/Script/activete 
->>> pip3 install -r requirements.txt
+---
+* >mkdir .env
+> 
+* >cd .env
+> 
+* >python -m venv web 
+> 
+* >./env/web/Script/activete 
+> 
+* > pip3 install -r requirements.txt
 ---
 
->>> python migrate db init 
->>> python migrate db migrate 
->>> python migrate db update
+* > python migrate db init 
+
+* > python migrate db migrate 
+
+* > python migrate db update
 
 
 --- 
 
->>> python main.py
+* > python main.py
 
 --- 
 ```
