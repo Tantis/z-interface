@@ -2,6 +2,9 @@ from flask_restplus import fields
 
 
 defaultJson = {
+    # Json 方式请求。
+    # TODO:数组渲染有一些问题。
+    # type, default, description
     "name": (fields.Integer, 1, "这是一个名字程序"),
     "list": [(fields.String, "nihao", "这是一个名字程序")],
     "json": {
