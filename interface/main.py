@@ -2,7 +2,6 @@
 import os
 import sys
 from flask import Markup
-from define.define_fields_models import *
 from flask_cors import CORS
 from flask import Blueprint, Flask, jsonify, url_for, render_template
 from flask_restplus import Api
@@ -16,6 +15,7 @@ if sys.version_info < (3, 0):
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
+
 app.config.SWAGGER_UI_DOC_EXPANSION = 'list'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///%s' % (
@@ -33,11 +33,3 @@ api = Api(blues,
           title=u'管理后台',
           description=u'管理后台')
 app.register_blueprint(blues)
-api.add_model(default200_Model.name, default200_Model)
-api.add_model(default200_Data_Model.name, default200_Data_Model)
-api.add_model(default400_Model.name, default400_Model)
-api.add_model(default403_Model.name, default403_Model)
-api.add_model(default404_Model.name, default404_Model)
-api.add_model(User_Simaple_Model.name, User_Simaple_Model)
-api.add_model(User_Simaple_Model_List_Data.name, User_Simaple_Model_List_Data)
-api.add_model(User_Simaple_Model_List.name, User_Simaple_Model_List)
