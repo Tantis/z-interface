@@ -7,8 +7,11 @@
 * >cd .env
   > 
 * >python -m venv web 
-  > 
+  >
+---
+ 
 * > ./env/web/Script/activete 
+* >
 ---
   > 
 * > pip3 install -r requirements.txt
