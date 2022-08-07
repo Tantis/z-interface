@@ -1,0 +1,1 @@
+celery -A interface.main.celery worker -l info -P eventlet

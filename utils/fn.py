@@ -1,18 +1,23 @@
 import time
 from functools import wraps
-from interface.logger import logger
+# from interface.logger import logger
+import logging
 
+logger = logging.getLogger()
 
 # 计算方法运行时间
+
+
 def Timefn(f):
 
     @wraps(f)
-    def decotor():
+    def decotor(tm=None):
+        currentTime = tm
         startTime = time.time()
         t = f()
         endTime = time.time()
         longTime = startTime - endTime
-        logger.info("【执行函数】%s 花费时间: %s" % (f.__name__, longTime))
+        print("【执行函数】%s 花费时间: %s" % (f.__name__, longTime))
         return t
     return decotor
 
@@ -42,3 +47,15 @@ def trace_calls(frame, event, arg):
     if func_name in ["get", "post", "put", "delete", "LoginResource"]:
         return trace_lines
     return
+
+
+if __name__ == "__main__":
+
+    def main():
+        time.sleep(0.5)
+        return 1
+    fn = Timefn(main)(tm=111)
+    print(fn)
+    # print(fn.__name__)
+    # result = fn(tm=111)
+    # print(result)
