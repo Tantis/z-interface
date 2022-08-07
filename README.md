@@ -26,9 +26,9 @@
 
 
 ```
+│─config                    // 配置
 ├─core                      // 核心代码区域
 ├─define                    // 配置与文档
-│  ├─config                 // 配置
 │  ├─document               // 文档
 ├─interface                 // 接口与逻辑
 │  ├─params                 // 参数
@@ -38,7 +38,7 @@
 │  ├─versions
 ├─orm                       // ORM
 │  ├─model                  // 模板
-├─tasks                     // 任务工作区
+├─tasks                     // 任务工作区celery
 └─utils                     // 实用工具
 
 // 暂定这些目录，后面还会陆续追加
@@ -68,5 +68,7 @@ defaultParams = {
 }
 
 ```
+* API示例图片
+![API示例图片](./img/api.png)
 
 
