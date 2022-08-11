@@ -3,19 +3,25 @@
 想做一个基于Flask的微服务整套逻辑框架的分享。
 
 ---
+
 * 运行方法
->mkdir .env
->cd .env
->python -m venv web 
+```shell
+> mkdir .env
+> cd .env
+> python -m venv web 
 > ./env/web/Script/activete 
----
+
 > pip3 install -r requirements.txt
 > python migrate db init 
 > python migrate db migrate 
 > python migrate db update
 > python main.py
-> 
 ```
+
+
+```
+
+
 │─config                    // 配置
 ├─core                      // 核心代码区域
 ├─define                    // 配置与文档
@@ -94,7 +100,7 @@ class LGResource(Resource)
     @body.login(api)
     def post(self, response):
         pass 
-    
+
 ```
 
 * API示例图片
