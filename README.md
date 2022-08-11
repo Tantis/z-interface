@@ -5,6 +5,8 @@
 ---
 
 * 运行方法
+
+
 ```shell
 > mkdir .env
 > cd .env
