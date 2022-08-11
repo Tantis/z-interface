@@ -6,24 +6,6 @@ from .bases import DocumentFormat
 """data类示例
 
 """
-new = DocumentFormat(_name="test1", _type=int,
-                     _required=True, _location="query",
-                     _value=1, _description="这是一个测试数据")
-_renew = DocumentFormat(
-    _type=list,
-    _value={
-        "list": DocumentFormat(_value=[
-            DocumentFormat(_type=str, _value="user01",
-                               _description="这是一个测试数据")
-        ], _name="LG_body_req"),
-        "code": DocumentFormat(_type=int, _value=200, _description="这是一个测试数据")
-    },
-    _description="这是一个测试数据")
-# _renew = DocumentFormat(
-#     _type=list, _value=[new, new1], _description="这是一个测试数据")
-
-_relast = DocumentFormat(
-    _type=list, _value=[new], _description="这是一个测试数据")
 
 
 class _params:
