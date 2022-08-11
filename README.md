@@ -78,8 +78,13 @@ class _body:
         return api.doc(body=_renew.json(api))
 
 ```
+> 
 > 装饰 example /interface/resource/login.py
+
+
+
 ```python
+
 from define.document import params, body
 class LGResource(Resource)
     @params.login(api)
@@ -89,13 +94,16 @@ class LGResource(Resource)
     @body.login(api)
     def post(self, response):
         pass 
+    
 ```
 
 * API示例图片
 ![API示例图片](./img/api.png)
 
 
-* API接口业务流程
+* 业务流程
 ![业务逻辑](./img/i.png)
+
+
 
 
