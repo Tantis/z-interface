@@ -1,30 +1,70 @@
 from flask_restplus import fields
+from werkzeug.datastructures import FileStorage
+from .bases import DocumentFormat
 
 
-defaultJson = {
-    # Json 方式请求。
-    # TODO:数组渲染有一些问题。
-    # type, default, description
-    "name": (fields.Integer, 1, "这是一个名字程序"),
-    "list": [(fields.String, "nihao", "这是一个名字程序")],
-    "json": {
-        "your": (fields.Integer, 1, "这是一个名字程序")
-    }
-}
-defaultParams = {
-    # 请求参数
-    # (_type, default, helper, required, location)
-    # location 包括: header, args, form, cookies, values
-    # location 可以设置为数组 ["headers", "args"]
-    "name":         (int, 1, "这是一个整型", True, "values"),
-    "uri":          (str, "nihao",  "这是一个字符串", True, "args"),
-    "uri_prefix":   (str, "nihao",  "这是一个不必要的参数", False, "values"),
-}
+"""data类示例
 
-defaultResponse = {
-    "status": (fields.Integer, 200, "这是一个名字程序"),
-    "description": [(fields.String, "nihao", "这是一个名字程序")],
-    "data": {
-        "your": (fields.Integer, 1, "这是一个名字程序")
-    }
-}
+"""
+new = DocumentFormat(_name="test1", _type=int,
+                     _required=True, _location="query",
+                     _value=1, _description="这是一个测试数据")
+_renew = DocumentFormat(
+    _type=list,
+    _value={
+        "list": DocumentFormat(_value=[
+            DocumentFormat(_type=str, _value="user01",
+                               _description="这是一个测试数据")
+        ], _name="LG_body_req"),
+        "code": DocumentFormat(_type=int, _value=200, _description="这是一个测试数据")
+    },
+    _description="这是一个测试数据")
+# _renew = DocumentFormat(
+#     _type=list, _value=[new, new1], _description="这是一个测试数据")
+
+_relast = DocumentFormat(
+    _type=list, _value=[new], _description="这是一个测试数据")
+
+
+class _params:
+
+    dt = DocumentFormat
+
+    def login(self, api):
+        token = self.dt(_name="token", _type=str,
+                        _required=True, _location="query",
+                        _value="", _description="登录后的token信息")
+        access_token = self.dt(_name="access_token", _type=str,
+                               _required=True, _location="query",
+                               _value="", _description="接入的token信息")
+        _login_result = self.dt(_value=[token, access_token],
+                                parse=api.parser()).params()
+        return api.doc(parser=_login_result)
+
+
+class _body:
+
+    dt = DocumentFormat
+
+    def login(self, api):
+        _account = self.dt(_type=str, _value="user01",
+                           _description="账户", _value_ext=dict(
+                               min_length=7, max_length=15
+                           ))
+        _password = self.dt(_type=str, _value="user01",
+                            _description="密码", _value_ext=dict(
+                                min_length=7, max_length=15
+                            ))
+        _renew = self.dt(
+            _type=dict,
+            _value={
+                "account": _account,
+                "password": _password
+            },
+            _name="user_account_number_01",
+        )
+        return api.doc(body=_renew.json(api))
+
+
+params = _params()
+body = _body()

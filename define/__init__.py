@@ -1,3 +1,3 @@
 
-from .document import DocFormat
+from .document import *
 from .document.document import *

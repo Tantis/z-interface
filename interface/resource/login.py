@@ -12,21 +12,30 @@ from interface.logger import logger
 from orm.model import User
 from flask import request
 from flask_restplus import Resource
+from define.document import params, body
+from utils.fn import befor
+from interface.params.login import Args
+from config.network import HttpState
 
 
 class LoginResource(Resource):
     num = 1
 
-    @DocFormat.params(data=defaultParams, name="login")
-    def get(self):
+    @params.login(api)
+    @befor(Args.login, HttpState)
+    def get(self, args):
         """获取登录信息
 
         """
-        return {}
+        state, response, code = HttpState.match(HttpState.Success.HTTP_SUCCESS)
+        response["data"] = args
+        return response, code
 
-    @DocFormat.response(name="responseLogin", data=defaultResponse)
-    @DocFormat.model(data=defaultJson, name="postLogin")
-    def post(self):
+    # @DocFormat.response(name="responseLogin", data=defaultResponse)
+    # @DocFormat.model(data=defaultJson, name="postLogin")
+    # @api.doc(parser=_relast.params())
+    @body.login(api)
+    def post(self, args):
         """ 登陆 
 
 

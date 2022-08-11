@@ -18,20 +18,13 @@ if sys.version_info < (3, 0):
     sys.setdefaultencoding('utf-8')
 
 app = Flask(__name__)
-
-
-app.config.update(APP_SETTINGS.toObject())
-
-# app.config.SWAGGER_UI_DOC_EXPANSION = 'list'
-# app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///%s' % (
-#     os.path.join(PROJECT_ROOT, "example.db"))
+app.config.update(APP_SETTINGS.toJson())
 db = SQLAlchemy(app)
 force_auto_coercion()
 force_instant_defaults()
 app.secret_key = 'B0ZrPP9DW123j/3yX R~XHH!jmN]LWX/,?RT'
 blues = Blueprint('api', __name__, url_prefix='/api')
-api = Api(blues, **API_SETTING.toObject())
+api = Api(blues, **API_SETTING.toJson())
 app.register_blueprint(blues)
 celery = createCelery(app)
 

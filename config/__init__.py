@@ -11,16 +11,17 @@ PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 
 class Environment(enum.Enum):
-    DEVELOPMENT = 0
-    TESTING = 1
-    ONLINE = 2
+    # 环境
+    DEVELOPMENT = 0     # 开发
+    TESTING = 1         # 测试
+    ONLINE = 2          # 生产
 
 
 class BaseConfigure(object):
     Environment = Environment.DEVELOPMENT
 
     @classmethod
-    def toObject(cls):
+    def toJson(cls):
         _k = cls.__dict__
         result = dict(filter(lambda x: not x[0].startswith('__'), _k.items()))
         return result
@@ -68,8 +69,8 @@ class API_SETTING(BaseConfigure):
     title = '某API接口管理程序'
     description = '用于展示接口'
     validate = None
-    default = 'default'
-    default_label = 'Default namespace'
+    default = '某API 接口'
+    default_label = 'Flask API 接口使用案例'
     tags = None
     prefix = ''
     ordered = False

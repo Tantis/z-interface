@@ -14,7 +14,7 @@ from flask_restplus import fields
 from interface import api
 from flask_restplus.utils import merge
 import uuid
-# from .document import *
+from .document import *
 
 
 class NotDocumentError(Exception):
