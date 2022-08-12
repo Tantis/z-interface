@@ -3,6 +3,7 @@ import traceback
 from functools import wraps
 from interface.logger import logger
 from .ob import model
+from config.network import HttpState
 
 
 def Timefn(f):
@@ -47,7 +48,7 @@ def trace_calls(frame, event, arg):
     return
 
 
-def befor(befor_func, s):
+def befor(befor_func, s=HttpState):
     print(befor_func.__name__, s.__name__)
 
     def wapper(f):
@@ -63,11 +64,11 @@ def befor(befor_func, s):
                 if state == s.State._fail:
                     logger.info("[%s] request fail code: %s" %
                                 (_real_name, code))
-                    return response, code
+                    return state, response, code
             except Exception as err:
                 traceback.print_exc()
-                flag, bad_req, code = s.match(s.Failure.HTTP_BAD_REQUEST)
-                return bad_req, code
+                state, bad_req, code = s.match(s.Failure.HTTP_BAD_REQUEST)
+                return state, bad_req, code
             kw["args"] = model(response)
             result = f(*ar, **kw)
             return result
@@ -75,18 +76,36 @@ def befor(befor_func, s):
     return wapper
 
 
-def after(target, *argsv, **kwargs):
+def after(target, s=HttpState):
     """ 函数执行之后是否执行某函数
 
     """
     def control(func, *args, **kwarg):
-        def result(x): return target(x)
+        _real_name = func.__name__ + '[befor request]'
 
         @wraps(func)
         def __console(*ag, **kw):
-            flag, response = func(*ag, **kw)
-            if flag != 200:
-                return flag, response
-            return result(response)
+            try:
+                state, response, code = func(*ag, **kw)
+                if state == s.State._fail:
+                    logger.info("[%s] request fail code: %s" %
+                                (_real_name, code))
+                    return state, response, code
+                kw["response"] = response
+                state, result, code = target(**kw)
+                return state, result, code
+            except Exception as err:
+                traceback.print_exc()
+                _, bad_req, code = s.match(s.Failure.HTTP_BAD_REQUEST)
+                return state, bad_req, code
         return __console
     return control
+
+
+def last(response_func):
+    def decotor(f):
+        def wapper(*ag, **kw):
+            _, response, code = f(*ag, **kw)
+            return response_func(response, code)
+        return wapper
+    return decotor

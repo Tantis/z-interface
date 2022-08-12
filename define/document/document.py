@@ -12,6 +12,17 @@ class _params:
 
     dt = DocumentFormat
 
+    def header(self, api):
+        _tk = self.dt(_name="header_token", _type=str,
+                      _required=True, _location="header",
+                      _value="", _description="在头部添加Token信息")
+        _ac = self.dt(_name="header_access_token", _type=str,
+                      _required=True, _location="header",
+                      _value="", _description="在头部添加接入信息")
+        _hader_result = self.dt(_value=[_tk, _ac],
+                                parse=api.parser()).params()
+        return api.doc(parser=_hader_result)
+
     def login(self, api):
         token = self.dt(_name="token", _type=str,
                         _required=True, _location="query",

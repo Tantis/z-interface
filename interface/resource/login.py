@@ -4,40 +4,40 @@
 # Copyright (c) 2018 yu.liu <showmove@qq.com>
 # All rights reserved
 import random
-
-
 from define import *
-from interface.main import api, db
+
 from interface.logger import logger
-from orm.model import User
-from flask import request
-from flask_restplus import Resource
-from define.document import params, body
-from utils.fn import befor
+from interface.main import api, db
 from interface.params.login import Args
+from interface.process.login import LoginProcess
+from interface.response import DefualtResponse
 from config.network import HttpState
 
+from orm.model import User
+from flask_restplus import Resource
+from define.document import params, body
+from utils.fn import befor, after, last
 
+
+@params.header(api)
 class LoginResource(Resource):
-    num = 1
 
-    @params.login(api)
-    @befor(Args.login, HttpState)
+    @params.login(api)                   # 装在文档
+    @last(DefualtResponse.cors_response)               # 最后返回
+    @after(LoginProcess.continue_login)  # 逻辑操作
+    @after(LoginProcess.first_login)     # 逻辑操作
+    @befor(Args.login)                   # 参数验证
     def get(self, args):
         """获取登录信息
 
         """
-        state, response, code = HttpState.match(HttpState.Success.HTTP_SUCCESS)
+        _ok, response, code = HttpState.match(HttpState.Success.HTTP_SUCCESS)
         response["data"] = args
-        return response, code
+        return _ok, response, code
 
-    # @DocFormat.response(name="responseLogin", data=defaultResponse)
-    # @DocFormat.model(data=defaultJson, name="postLogin")
-    # @api.doc(parser=_relast.params())
     @body.login(api)
     def post(self, args):
         """ 登陆 
-
 
         """
         maxId = User.query.filter(User.id > 0).order_by(User.id).first()
