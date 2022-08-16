@@ -8,7 +8,7 @@ if __name__ == '__main__':
 
     _renew = DocumentFormat(
         _type=list, _value=[new, new], _description="这是一个测试数据")
-    par = _renew.params()
+    par = _renew.json()
     print(par)
     import ipdb
     ipdb.set_trace()

@@ -11,7 +11,6 @@ from orm import SQLAlchemy
 from sqlalchemy_utils import force_auto_coercion, force_instant_defaults
 from tasks.celery import createCelery
 
-cross_origin_resource_sharing = CORS()
 
 if sys.version_info < (3, 0):
     reload(sys)
@@ -27,6 +26,8 @@ blues = Blueprint('api', __name__, url_prefix='/api')
 api = Api(blues, **API_SETTING.toJson())
 app.register_blueprint(blues)
 celery = createCelery(app)
+cross_origin_resource_sharing = CORS(
+    app, resources={r"/api/*": {"origins": "*"}})
 
 
 @app.route('/', methods=['GET', "POST"])
